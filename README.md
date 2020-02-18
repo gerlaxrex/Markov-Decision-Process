@@ -14,4 +14,4 @@ For this code I created three classes:
 
 The *main.cpp* file initializes, computes the optimal policy and takes 10 steps of the MDP represented in the image below.
 
-![alt-text](/images/MDP.png)
+![alt-text](/MDP.png)
