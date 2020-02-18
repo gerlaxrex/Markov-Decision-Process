@@ -17,3 +17,11 @@ The *main.cpp* file initializes, computes the optimal policy and takes 10 steps 
 ![alt-text](/MDP.png)
 
 (_In this example rewards are chosen in this way: S0->5, S1->10, S2->6)_)
+
+<h2>Compile</h2>
+
+''g++ main.cpp Action.cpp MDP.cpp -std=c++11 -o MDP''
+
+(A makefile will be added ASAP)
+
+
