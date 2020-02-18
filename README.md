@@ -1,4 +1,5 @@
-# Markov-Decision-Process
+<h1>Markov-Decision-Process</h1>
+
 C++ code implementing a Markov Decision Process.
 ATTENTION: This is not the final version, it will be subject to changes and adjustments in the code and eventually organization of the classes.
 
