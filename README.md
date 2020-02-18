@@ -15,3 +15,5 @@ For this code I created three classes:
 The *main.cpp* file initializes, computes the optimal policy and takes 10 steps of the MDP represented in the image below.
 
 ![alt-text](/MDP.png)
+
+(_In this example rewards are chosen in this way: S0->5, S1->10, S2->6)_)
