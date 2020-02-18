@@ -1,0 +1,34 @@
+#ifndef ACTION_HPP
+
+#define ACTION_HPP
+
+#include<string>
+#include"MDP.hpp"
+
+class MDP;
+
+class Action{
+    protected:
+        std::string actionName;
+        unsigned int actionId;
+    public:
+        friend std::ostream& operator<<(std::ostream& os, const Action& a);
+        friend std::ostream& operator<<(std::ostream& os,Action* a);
+        //Constructor/Destructor
+        Action(const std::string actionName, unsigned int actionId);
+        virtual ~Action();
+        //Overloaded Operators
+        Action& operator=(const Action& a);
+        bool operator==(const Action& a) const;
+        //bool operator==(Action*&) const;
+        bool operator<(const Action& a) const;
+        bool operator<=(const Action& a) const;
+        bool operator>(const Action& a) const;
+        bool operator>=(const Action& a) const;
+        //General execution action
+        std::string getName();
+        unsigned int getId();
+        virtual void execute();
+};
+
+#endif
