@@ -3,7 +3,7 @@
 C++ code implementing a Markov Decision Process.
 ATTENTION: This is not the final version, it will be subject to changes and adjustments in the code and eventually organization of the classes.
 
-#Classes
+<h2>Classes</h2>
 
 For this code I created three classes:
   - **Action**: It represents an Action that an agent can execute. This class may be inherited in order to create more specific actions (     (for example, we can create Up, Down, Left, Right classes for a robot agent acting in a certain environment.)
