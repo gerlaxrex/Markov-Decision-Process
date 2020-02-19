@@ -141,9 +141,9 @@ MDP& MDP::addReward(const State& s, double reward){
 }
 
 State& MDP::getState(unsigned int i){
-    for(auto el : this->states){
-        if(i == el.getId()){
-            return el;
+    for(auto it = this->states.begin(); it != this->states.end(); ++it){
+        if(i == it->getId()){
+            return *it;
         }
     }
     throw std::runtime_error("State not found.");
@@ -176,12 +176,12 @@ std::random_device rd;
     double prevSum = 0;
     double sum = 0;
     //std::cout << chosen << std::endl;
-    for(auto el : distr){
+    for(auto it = distr.begin(); it!= distr.end();++it){
         prevSum = sum;
-        sum += el.second;
+        sum += it->second;
         //std::cout << "Prev:" <<prevSum << ", sum:" << sum << std::endl;
         if(chosen <= sum && chosen > prevSum){
-            return el.first;
+            return it->first;
         }    
     }
     throw std::runtime_error("No State found for the given probability distribution.\n");
@@ -283,7 +283,7 @@ MDP& MDP::setCurrentState(unsigned int i){
             this->currentState = &(*it);
             std::cout << "current State: " << *currentState <<" (id: " << currentState->getId() << ") " << std::endl;
             found = true;
-            //break;
+            break;
         }
     }
     if(!found){
@@ -301,13 +301,13 @@ MDP& MDP::step(){
         //Select the next best Action:
         Action *nextAction = this->policy[*currentState];
         std::cout << *nextAction << std::endl;
-        //Compute the next probable State.
-        std::map<State,Action*> distr;
         for(auto el : this->transitions){
-            if(el.first.first == *currentState && *el.first.second == *nextAction){    
+            if(el.first.first == *currentState && *el.first.second == *nextAction){
+                this->computeProbability(el.second);
+                std::cout << "Found";  
                 State nextState = this->computeProbability(el.second);
                 std::cout << "Moving to " << nextState << std::endl;
-                this->setCurrentState(nextState.getId());
+                this->setCurrentState(nextState.getId()); 
             }
         }
         return *this;
