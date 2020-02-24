@@ -3,117 +3,14 @@
 #include<sstream>
 #include<utility>
 #include<stdexcept>
-#include<memory>
 #include<random>
+#include<iomanip>
 #include"MDP.hpp"
 #include"Action.hpp"
-
-//STATE
-unsigned int State::actual_id = 0;
-
-State::State(){
-    std::ostringstream os;
-    this->id = actual_id++;
-    os << "S" << this->id;
-    this->name = os.str();
-}
-
-State::State(const std::string& n){
-    this->id = actual_id++;
-    this->name = n;
-}
-
-State::State(const State& s){
-    this->id = s.id;
-    this->name = s.name;
-
-    for(auto el : this->possibleActions){
-        delete el;
-    }
-    this->possibleActions.clear();
-    
-    for(auto el : s.possibleActions){
-        this->possibleActions.push_back(new Action(el->getName(),el->getId()));
-    }
-}
-
-State::~State(){
-    for(auto el : this->possibleActions){
-        delete el;
-    }
-    this->possibleActions.clear();
-}
-
-State& State::operator=(const State& a){
-    this->id = a.id;
-    this->name = a.name;
-
-    for(auto el : this->possibleActions){
-        delete el;
-    }
-    this->possibleActions.clear();
-    
-    for(auto el : a.possibleActions){
-        this->possibleActions.push_back(new Action(el->getName(),el->getId()));
-    }
-    return *this;
-}
-
-bool State::operator==(const State& a) const {
-    return (this->id == a.id? true : false);
-}
-
-bool State::operator<(const State& a) const {
-    return (this->id < a.id? true : false);
-}
-
-bool State::operator<=(const State& a) const {
-    return (this->id <= a.id? true : false);
-}
-
-bool State::operator>(const State& a) const {
-    return (this->id > a.id? true : false);
-}
-
-bool State::operator>=(const State& a) const {
-    return (this->id >= a.id? true : false);
-}
-
-int State::getId(){
-    return this->id;
-}
-
-std::string& State::getName(){
-    return this->name;
-}
-
-std::ostream& operator<<(std::ostream& out, const State& s){
-    out << "State " << s.id << " ";
-    return out;
-}
-
-std::vector<Action*> State::getActions(){
-    return this->possibleActions;
-}
-
-State& State::addAction(Action* newAction){
-    this->possibleActions.push_back(newAction);
-    return *this;
-}
-
-
-Action* State::getAction(unsigned int id){
-    for(auto action : this->possibleActions){
-        if(action->getId() == id){
-            return action;
-        }
-    }
-    return NULL;
-}
+#include"State.hpp"
 
 
 //MDP
-
 MDP::MDP(const std::vector<State>& sts){
     this->states = sts;
     this->currentState = NULL;
@@ -254,7 +151,7 @@ MDP& MDP::computePolicy(){
 void MDP::printRewards(){
     std::cout << "REWARDS:" << std::endl;
     for(auto r : this->rewards){
-        std::cout << r.first << "->" << r.second << std::endl;
+        std::cout << r.first << "->" << std::setw(3) << r.second << std::endl;
     }
 }
 
@@ -268,9 +165,9 @@ void MDP::printPolicy(){
 void MDP::printTransitions(){
     std::cout << "TRANSITIONS: "<< std::endl;
     for(auto el : this->transitions){
-        std::cout << el.first.first << "," << el.first.second << "---->";
+        std::cout << "<" << el.first.first << "," << el.first.second << "> ----> ";
         for(auto d : el.second){
-            std::cout << d.first << ": " << d.second << "; ";
+            std::cout << d.first << " : " << std::setw(5) << std::setprecision(3) << d.second << "; ";
         }
         std::cout << std::endl;
     }
@@ -281,7 +178,7 @@ MDP& MDP::setCurrentState(unsigned int i){
     for(auto it = this->states.begin(); it != this->states.end(); ++it){
         if(it->getId() == i){
             this->currentState = &(*it);
-            std::cout << "current State: " << *currentState <<" (id: " << currentState->getId() << ") " << std::endl;
+            //std::cout << "current State: " << *currentState <<" (id: " << currentState->getId() << ") " << std::endl;
             found = true;
             break;
         }
@@ -304,7 +201,7 @@ MDP& MDP::step(){
         for(auto el : this->transitions){
             if(el.first.first == *currentState && *el.first.second == *nextAction){
                 this->computeProbability(el.second);
-                std::cout << "Found";  
+                //std::cout << "Found";  
                 State nextState = this->computeProbability(el.second);
                 std::cout << "Moving to " << nextState << std::endl;
                 this->setCurrentState(nextState.getId()); 
