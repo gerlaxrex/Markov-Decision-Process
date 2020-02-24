@@ -20,8 +20,9 @@ The *main.cpp* file initializes, computes the optimal policy and takes 10 steps 
 
 <h2>Compile</h2>
 
-``g++ main.cpp Action.cpp MDP.cpp -std=c++11 -o MDP``
+Go into the make folder, then just:
 
-(A makefile will be added ASAP)
+``make``
+
 
 
