@@ -2,9 +2,6 @@ CXX = g++
 CXXFLAGS = -o make/
 CXXVERSION = -std=c++17
 
-#main: Action.cpp State.cpp MDP.cpp main.cpp
-#	$(CXX) main.cpp MDP.cpp State.cpp Action.cpp $(CXXFLAGS)
-
 main: make/Action.o make/State.o make/MDP.o make/main.o
 	$(CXX) -g make/main.o make/Action.o make/State.o make/MDP.o $(CXXVERSION) $(CXXFLAGS)MDP
 
