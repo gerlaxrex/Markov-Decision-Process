@@ -32,11 +32,11 @@ public:
     bool operator<=(const State& a) const;
     bool operator>(const State& a) const;
     bool operator>=(const State& a) const;
-    int getId(); //Id getter
-    std::string& getName(); //Name Getter
+    int getId() const ; //Id getter
+    std::string getName() const; //Name Getter
     State& addAction(Action* newAction); //Add an action to a state
-    std::vector<Action*> getActions();
-    Action* getAction(unsigned int id);
+    std::vector<Action*> getActions() const;
+    Action* getAction(unsigned int id) const;
 };
 
 #endif

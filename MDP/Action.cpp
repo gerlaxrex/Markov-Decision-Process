@@ -8,9 +8,6 @@ Action::Action(std::string actionName, unsigned int actionId) : actionName(actio
 
 Action::~Action(){}
 
-void Action::execute(){
-}
-
 Action& Action::operator=(const Action& a){
     this->actionName = a.actionName;
     this->actionId = a.actionId;
@@ -47,11 +44,11 @@ bool Action::operator>=(const Action& a) const {
     return (this->actionId >= a.actionId? true : false);
 }
 
-std::string Action::getName(){
+std::string Action::getName() const{
     return this->actionName;
 }
 
-unsigned int Action::getId(){
+unsigned int Action::getId() const {
     return this->actionId;
 }
 

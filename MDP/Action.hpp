@@ -20,15 +20,14 @@ class Action{
         //Overloaded Operators
         Action& operator=(const Action& a);
         bool operator==(const Action& a) const;
-        //bool operator==(Action*&) const;
+        //friend bool operator==(Action* a1, Action*a2) const;
         bool operator<(const Action& a) const;
         bool operator<=(const Action& a) const;
         bool operator>(const Action& a) const;
         bool operator>=(const Action& a) const;
-        //General execution action
-        std::string getName();
-        unsigned int getId();
-        virtual void execute();
+        //Getters
+        std::string getName() const;
+        unsigned int getId() const;
 };
 
 #endif

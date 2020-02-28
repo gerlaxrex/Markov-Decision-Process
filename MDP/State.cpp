@@ -76,11 +76,11 @@ bool State::operator>=(const State& a) const {
     return (this->id >= a.id? true : false);
 }
 
-int State::getId(){
+int State::getId() const {
     return this->id;
 }
 
-std::string& State::getName(){
+std::string State::getName() const {
     return this->name;
 }
 
@@ -89,7 +89,7 @@ std::ostream& operator<<(std::ostream& out, const State& s){
     return out;
 }
 
-std::vector<Action*> State::getActions(){
+std::vector<Action*> State::getActions() const {
     return this->possibleActions;
 }
 
@@ -99,7 +99,7 @@ State& State::addAction(Action* newAction){
 }
 
 
-Action* State::getAction(unsigned int id){
+Action* State::getAction(unsigned int id) const {
     for(auto action : this->possibleActions){
         if(action->getId() == id){
             return action;
