@@ -20,9 +20,15 @@ The *main.cpp* file initializes, computes the optimal policy and takes 10 steps 
 
 <h2>Compile</h2>
 
-Go into the make folder, then just:
+Just:
 
 ``make``
 
+The executable file will be stored in the make directory.
+
+<h2>Future Updates?</h2>
+
+  1. Add hashing functions in order to make use of the ``std::unordered_map`` and improve computational efficiency.
+  2. Try to make a visual representation of the MDP for every step taken.
 
 
