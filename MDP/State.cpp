@@ -3,6 +3,7 @@
 #include<utility>
 #include<stdexcept>
 #include<iomanip>
+#include<functional>
 #include"Action.hpp"
 
 //STATE
@@ -106,4 +107,10 @@ Action* State::getAction(unsigned int id) const {
         }
     }
     return NULL;
+}
+
+size_t HashState::operator()(const State& s) const{
+    size_t h1 = std::hash<std::string>{}(s.getName());
+    size_t h2 = std::hash<int>{}(s.getId());
+    return h1 ^ h2;
 }

@@ -30,4 +30,10 @@ class Action{
         unsigned int getId() const;
 };
 
+
+struct HashAction{
+    size_t operator()(const Action& a) const ;
+};
+
+
 #endif

@@ -39,4 +39,8 @@ public:
     Action* getAction(unsigned int id) const;
 };
 
+struct HashState{
+    size_t operator()(const State& s) const;
+};
+
 #endif

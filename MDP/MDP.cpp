@@ -29,7 +29,7 @@ MDP::~MDP(){
 }
 
 MDP& MDP::addReward(const State& s, double reward){
-    auto conf = this->rewards.insert(std::map<State,double>::value_type(s,reward));
+    auto conf = this->rewards.insert(std::unordered_map<State,double,HashState>::value_type(s,reward));
     if(conf.second == false){
         std::cout << "Reward for the state already exists." << std::endl;
     }else{
@@ -47,22 +47,22 @@ State& MDP::getState(unsigned int i){
 }
 
 
-MDP& MDP::addTransition(const std::pair<State,Action*>& sa, std::map<State,double>& distr){
+MDP& MDP::addTransition(const std::pair<State,Action*>& sa, const std::map<State,double>& distr){
     double norm = 0;
     for(auto el : distr){
         norm += el.second;
     }
     
-    //Normalize the distribution    
-    for(auto el : distr){
-        distr[el.first] = el.second/norm;
-    }
 
     auto conf = this->transitions.insert(std::make_pair(sa,distr));
     if(conf.second == false){
         std::cout << "Transition already exists." << std::endl;
     }else{
         std::cout << "Inserted Transition." << std::endl;
+        //Normalize the distribution    
+        for(auto el : this->transitions[sa]){
+            this->transitions[sa][el.first] = el.second/norm;
+        }
     }
 }
 
