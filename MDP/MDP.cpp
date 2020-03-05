@@ -12,6 +12,7 @@
 
 //MDP
 MDP::MDP(const std::vector<State>& sts){
+    debugMode = false;
     this->states = sts;
     this->currentState = NULL;
 }
@@ -33,8 +34,9 @@ MDP& MDP::addReward(const State& s, double reward){
     if(conf.second == false){
         std::cout << "Reward for the state already exists." << std::endl;
     }else{
-        std::cout << "Inserted reward." << std::endl;
+        if(debugMode) std::cout << "Inserted reward." << std::endl;
     }
+    return *this;
 }
 
 State& MDP::getState(unsigned int i){
@@ -64,6 +66,7 @@ MDP& MDP::addTransition(const std::pair<State,Action*>& sa, const std::map<State
             this->transitions[sa][el.first] = el.second/norm;
         }
     }
+    return *this;
 }
 
 const State& MDP::computeProbability(const std::map<State,double>& distr){
@@ -110,30 +113,32 @@ MDP& MDP::computePolicy(){
     //Begin the procedure
     double tollerance = 0.01;
     double maxDistance = 0;
+    double discountFactor = 0.5;
     do{
         u = v;
-        double preceding = 0; 
+        double preceding = 0;
+        if(debugMode) std::cout << "ITERATION --------------------" << std::endl; 
         for(auto s : this->states){
             double preceding = 0;
-            //std::cout << std::endl;
-            //std::cout << "processing " << s << std::endl;
+            if(debugMode){
+                std::cout << std::endl;
+                std::cout << "processing " << s << std::endl;
+            }
             for(auto a : s.getActions()){
-                //std::cout << "action: "<< a << std::endl;
+                if(debugMode) std::cout << "action: "<< a << std::endl;
                 for(auto prob : this->transitions){
-                    //std::cout << "A";
                     if(prob.first.first == s && *prob.first.second == *a){
                         double sumProb = 0;
-                        //std::cout << "B";
                         for(auto d : prob.second){
                             //std::cout <<"distribution: " << d.first << ":" << d.second << std::endl;
                             sumProb += d.second*u[d.first];
                             }    
-                        double tmpUtil = this->rewards[s] + 0.3 * sumProb;
+                        double tmpUtil = this->rewards[s] + discountFactor * sumProb;
                         if(tmpUtil > preceding){
                             preceding = tmpUtil;
                             v[s] = tmpUtil;
                             this->policy[s] = new Action(a->getName(),a->getId());
-                            //std::cout << "Assigned "<< a << " to " << s << std::endl;
+                            if(debugMode) std::cout << "Assigned "<< a << " to " << s << " -> "<< v[s] << std::endl;
                         }                        
                     }
                 }
@@ -144,6 +149,7 @@ MDP& MDP::computePolicy(){
         }catch(std::runtime_error e){
             std::cout << e.what() << std::endl;
         }
+    if(debugMode) std::cout << "---------------------------------" <<std::endl;
     }while(maxDistance > tollerance);
     return *this;
 }
@@ -178,7 +184,7 @@ MDP& MDP::setCurrentState(unsigned int i){
     for(auto it = this->states.begin(); it != this->states.end(); ++it){
         if(it->getId() == i){
             this->currentState = &(*it);
-            //std::cout << "current State: " << *currentState <<" (id: " << currentState->getId() << ") " << std::endl;
+            if(debugMode) std::cout << "current State: " << *currentState <<" (id: " << currentState->getId() << ") " << std::endl;
             found = true;
             break;
         }
@@ -209,6 +215,10 @@ MDP& MDP::step(){
         }
         return *this;
     }
+}
+
+void MDP::activateDebug(){
+    this->debugMode = true;
 }
 
 

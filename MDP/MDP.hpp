@@ -17,6 +17,7 @@ class State;
 
 class MDP {
 private:
+    bool debugMode;
     State* currentState; //Pointer to the current state of the Markov Decision Process
     std::vector<State> states; //STATES
     std::unordered_map<State, double,HashState> rewards;  //REWARD FUNCTION
@@ -35,6 +36,7 @@ public:
     void printPolicy();
     void printTransitions();
     MDP& setCurrentState(unsigned int i);
+    void activateDebug();
     MDP& step(); //This function makes a stochastic step of the MDP. From the current state examines the policy, then moves probabilistically to one of the next states.
 };
 
