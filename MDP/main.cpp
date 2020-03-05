@@ -28,7 +28,7 @@ int main(){
 
     //Createa the MDP objects
     MDP* mk = new MDP({s0,s1,s2});
-    mk->activateDebug();
+    //mk->activateDebug();
     //Adding the rewards
     mk->addReward(s0,5);
     mk->addReward(s2,6);
