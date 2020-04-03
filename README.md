@@ -28,7 +28,7 @@ The executable file will be stored in the make directory.
 
 <h2>Future Updates?</h2>
 
-  1. Add hashing functions in order to make use of the ``std::unordered_map`` and improve computational efficiency.
-  2. Try to make a visual representation of the MDP for every step taken.
+  
+  1. Try to make a visual representation of the MDP for every step taken.
 
 
