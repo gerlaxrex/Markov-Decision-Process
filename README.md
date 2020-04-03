@@ -30,5 +30,6 @@ The executable file will be stored in the make directory.
 
   
   1. Try to make a visual representation of the MDP for every step taken.
+  2. Use factory patterns in order to centralize the creation of the objects. 
 
 
