@@ -18,12 +18,12 @@ MDP::MDP(const std::vector<State>& sts){
 }
 
 MDP::~MDP(){
-    for(auto el : this->policy){
+    for(auto& el : this->policy){
         delete el.second;
     }
     this->policy.clear();
 
-    for(auto el: this->transitions){
+    for(auto& el: this->transitions){
         delete el.first.second;
     }
     this->transitions.clear();

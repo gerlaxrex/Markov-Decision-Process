@@ -36,7 +36,7 @@ State::State(const State& s){
 }
 
 State::~State(){
-    for(auto el : this->possibleActions){
+    for(auto& el : this->possibleActions){
         delete el;
     }
     this->possibleActions.clear();
