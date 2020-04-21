@@ -4,11 +4,14 @@ CXXVERSION = -std=c++17
 
 $(shell mkdir -p make)
 
-main: Action.o State.o MDP.o main.o
-	$(CXX) -g make/main.o make/Action.o make/State.o make/MDP.o $(CXXVERSION) $(CXXFLAGS)MDP
+main: Action.o State.o MDP.o MDPFactory.o main.o
+	$(CXX) -g make/main.o make/Action.o make/State.o make/MDP.o make/MDPFactory.o $(CXXVERSION) $(CXXFLAGS)MDP
 
-main.o: main.cpp MDP.hpp Action.hpp State.hpp
+main.o: main.cpp MDPFactory.hpp MDP.hpp
 	$(CXX) -c main.cpp $(CXXVERSION) $(CXXFLAGS)main.o
+
+MDPFactory.o: MDPFactory.cpp MDPFactory.hpp MDP.hpp
+	$(CXX) -c MDPFactory.cpp $(CXXVERSION) $(CXXFLAGS)MDPFactory.o
 
 MDP.o: MDP.cpp MDP.hpp Action.hpp State.hpp
 	$(CXX) -c MDP.cpp $(CXXVERSION) $(CXXFLAGS)MDP.o

@@ -17,6 +17,14 @@ MDP::MDP(const std::vector<State>& sts){
     this->currentState = NULL;
 }
 
+MDP::MDP(unsigned int sn){
+    this->debugMode = false;
+    for(int i = 0; i != sn; ++i){
+        this->states.push_back({});
+    }
+    this->currentState = NULL;
+}
+
 MDP::~MDP(){
     for(auto& el : this->policy){
         delete el.second;
@@ -37,6 +45,15 @@ MDP& MDP::addReward(const State& s, double reward){
         if(debugMode) std::cout << "Inserted reward." << std::endl;
     }
     return *this;
+}
+
+MDP& MDP::createReward(unsigned int sn, double reward){
+    try{
+        this->addReward(this->getState(sn),reward);
+        return *this;
+    }catch(std::runtime_error e){
+        std::cout << e.what() << std::endl;
+    }
 }
 
 State& MDP::getState(unsigned int i){
@@ -68,6 +85,29 @@ MDP& MDP::addTransition(const std::pair<State,Action*>& sa, const std::map<State
     }
     return *this;
 }
+
+ MDP& MDP::addAction(unsigned state, const std::string actionName, unsigned actionId){
+     try{
+         this->getState(state).addAction(new Action(actionName,actionId));
+         return *this;
+     }catch(std::runtime_error e){
+         std::cout << e.what() << std::endl;
+     }
+ }
+
+MDP& MDP::createTransition(unsigned int stateId, unsigned int actionId, const std::map<unsigned int,double>& distr){
+    try{
+        std::map<State,double> ds;
+        for(auto& el : distr){
+            ds[this->getState(el.first)] = el.second;
+        }
+
+        this->addTransition(std::make_pair(this->getState(stateId),this->getState(stateId).getAction(actionId)),ds);
+    }catch(std::runtime_error e){
+        std::cout << e.what() << std::endl;
+    }
+}
+
 
 const State& MDP::computeProbability(const std::map<State,double>& distr){
 std::random_device rd;
@@ -199,13 +239,16 @@ MDP& MDP::setCurrentState(unsigned int i){
 MDP& MDP::step(){
     if(this->currentState == NULL){
         std::cout << "Current state has not been selected. Please call 'setCurrentState(unsigned int) method in order to set it." << std::endl;
-        return *this;
     }else{
         //Select the next best Action:
-        Action *nextAction = this->policy[*currentState];
-        std::cout << *nextAction << std::endl;
+        //Action *nextAction = this->policy[*currentState];
+        auto nextAction = this->policy.find(*currentState);
+        if(nextAction == this->policy.end()){
+            return *this;
+        }
+        std::cout << *nextAction->second << std::endl;
         for(auto el : this->transitions){
-            if(el.first.first == *currentState && *el.first.second == *nextAction){
+            if(el.first.first == *currentState && *el.first.second == *nextAction->second){
                 this->computeProbability(el.second);
                 //std::cout << "Found";  
                 State nextState = this->computeProbability(el.second);
@@ -213,8 +256,8 @@ MDP& MDP::step(){
                 this->setCurrentState(nextState.getId()); 
             }
         }
-        return *this;
     }
+    return *this;    
 }
 
 void MDP::activateDebug(){
