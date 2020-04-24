@@ -28,11 +28,11 @@ public:
     virtual ~State(); //virtual destructor
     //Utility overloaded operators
     State& operator=(const State&a);
-    bool operator==(const State& a) const;
-    bool operator<(const State& a) const;
-    bool operator<=(const State& a) const;
-    bool operator>(const State& a) const;
-    bool operator>=(const State& a) const;
+    virtual bool operator==(const State& a) const;
+    virtual bool operator<(const State& a) const;
+    virtual bool operator<=(const State& a) const;
+    virtual bool operator>(const State& a) const;
+    virtual bool operator>=(const State& a) const;
     int getId() const ; //Id getter
     std::string getName() const; //Name Getter
     State& addAction(Action* newAction); //Add an action to a state

@@ -26,23 +26,44 @@ std::ostream& operator<<(std::ostream& os,Action* a){
 }
 
 bool Action::operator==(const Action& a) const {
-    return (this->actionId == a.actionId? true : false);
+    if(typeid(*this) == typeid(a)){
+        return (this->actionId == a.actionId? true : false);
+    }else{
+        return false;
+    }
 }
 
 bool Action::operator<(const Action& a) const {
-    return (this->actionId < a.actionId? true : false);
+    if(typeid(*this) == typeid(a)){
+        return (this->actionId < a.actionId? true : false);
+    }else{
+        return false;
+    }
 }
 
 bool Action::operator<=(const Action& a) const {
-    return (this->actionId <= a.actionId? true : false);
+    if(typeid(*this) == typeid(a)){
+        return (this->actionId <= a.actionId? true : false);
+    }else{
+        return false;
+    }
 }
 
 bool Action::operator>(const Action& a) const {
-    return (this->actionId > a.actionId? true : false);
+    if(typeid(*this) == typeid(a)){
+        return (this->actionId > a.actionId? true : false);
+    }else{
+        return false;
+    }
 }
 
 bool Action::operator>=(const Action& a) const {
-    return (this->actionId >= a.actionId? true : false);
+    if(typeid(*this) == typeid(a)){
+        return (this->actionId >= a.actionId? true : false);
+    }else{
+        return false;
+    }
+
 }
 
 std::string Action::getName() const{

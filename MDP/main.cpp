@@ -5,6 +5,21 @@
 #include<map>
 #include<utility>
 
+
+class A2 : public Action{
+    public:
+
+        A2(const std::string& a, unsigned d):Action(a,d){}
+
+        bool operator==(const Action& a){
+            if(typeid(*this) == typeid(a)){
+                return (this->actionId == a.getId()? true : false);
+            }else{
+                return false;
+            }
+        }
+};
+
 int main(){
     //Write our states transitions with probabilities to be used next (We could also declare them in the addTransition)
     std::map<unsigned,double> distr1 = {{0,0.2},{1,0.8}};

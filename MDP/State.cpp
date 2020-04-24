@@ -58,23 +58,43 @@ State& State::operator=(const State& a){
 }
 
 bool State::operator==(const State& a) const {
-    return (this->id == a.id? true : false);
+    if(typeid(*this) == typeid(a)){
+        return (this->id == a.id? true : false);
+    }else{
+        return false;
+    }
 }
 
 bool State::operator<(const State& a) const {
-    return (this->id < a.id? true : false);
+    if(typeid(*this) == typeid(a)){
+        return (this->id < a.id? true : false);
+    }else{
+        return false;
+    }
 }
 
 bool State::operator<=(const State& a) const {
-    return (this->id <= a.id? true : false);
+    if(typeid(*this) == typeid(a)){
+        return (this->id <= a.id? true : false);
+    }else{
+        return false;
+    }
 }
 
 bool State::operator>(const State& a) const {
-    return (this->id > a.id? true : false);
+    if(typeid(*this) == typeid(a)){
+        return (this->id > a.id? true : false);
+    }else{
+        return false;
+    }
 }
 
 bool State::operator>=(const State& a) const {
-    return (this->id >= a.id? true : false);
+    if(typeid(*this) == typeid(a)){
+        return (this->id >= a.id? true : false);
+    }else{
+        return false;
+    }
 }
 
 int State::getId() const {
