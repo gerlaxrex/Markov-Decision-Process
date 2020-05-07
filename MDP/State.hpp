@@ -18,26 +18,25 @@ class State{
 private:
     unsigned int id; //unique identifier for the state
     std::string name; //eventual name for the state (can also be empty)
-    static unsigned int actual_id; //Counter for the number of states;
-    std::vector<Action*> possibleActions;
+    std::vector<std::shared_ptr<Action>> possibleActions;
 public:
     friend std::ostream& operator<<(std::ostream& out, const State& s);
-    State(); //Default constructor
-    State(const std::string& n);   //Name Initialization
+    State(unsigned id); //Default constructor
+    State(const std::string& n, unsigned id);   //Name Initialization
     State(const State& s);
     virtual ~State(); //virtual destructor
     //Utility overloaded operators
     State& operator=(const State&a);
-    virtual bool operator==(const State& a) const;
-    virtual bool operator<(const State& a) const;
-    virtual bool operator<=(const State& a) const;
-    virtual bool operator>(const State& a) const;
-    virtual bool operator>=(const State& a) const;
+    bool operator==(const State& a) const;
+    bool operator<(const State& a) const;
+    bool operator<=(const State& a) const;
+    bool operator>(const State& a) const;
+    bool operator>=(const State& a) const;
     int getId() const ; //Id getter
     std::string getName() const; //Name Getter
-    State& addAction(Action* newAction); //Add an action to a state
-    std::vector<Action*> getActions() const;
-    Action* getAction(unsigned int id) const;
+    State& addAction(const std::shared_ptr<Action>& newAction); //Add an action to a state
+    std::vector<std::shared_ptr<Action>> getActions() const;
+    std::shared_ptr<Action> getAction(unsigned int id) const;
 };
 
 struct HashState{

@@ -6,34 +6,19 @@
 #include<utility>
 
 
-class A2 : public Action{
-    public:
-
-        A2(const std::string& a, unsigned d):Action(a,d){}
-
-        bool operator==(const Action& a){
-            if(typeid(*this) == typeid(a)){
-                return (this->actionId == a.getId()? true : false);
-            }else{
-                return false;
-            }
-        }
-};
-
 int main(){
     //Write our states transitions with probabilities to be used next (We could also declare them in the addTransition)
     std::map<unsigned,double> distr1 = {{0,0.2},{1,0.8}};
-    std::map<unsigned,double> distr2 = {{0,0.7},{1,0.4}};
+    std::map<unsigned,double> distr2 = {{0,0.7},{1,0.3}};
     std::map<unsigned,double> distr3 = {{0,0.0},{1,1.0}};
     std::map<unsigned,double> distr4 = {{1,0.3},{2,0.7}};
     std::map<unsigned,double> distr5 = {{1,0.0},{2,1}};
     std::map<unsigned,double> distr6 = {{0,0.5},{2,0.5}};
 
     //create a MDP with 3 states
-    //auto f = MDPFactory::getInstance();
-    //auto mk = f->createMDP(3);
-    auto mk = new MDP(3);
-
+    auto f = MDPFactory::getInstance();
+    auto mk = f->createMDP(3);
+    
     //Adding Actions to States
     mk->addAction(0,"A",0);
     mk->addAction(1,"B",1);
