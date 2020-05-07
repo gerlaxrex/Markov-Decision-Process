@@ -11,6 +11,8 @@ For this code I created three classes:
   - **State**: It represents a simple state in the MDP containg a vector of pointer to Actions, a Name and an Id.
   
   - **MDP**: This is the main class, containing various data structures representing the states of the MDP, the rewards for every state,      the transition function, the optimal policy. The main methods for this class are 'computePolicy()', that is needed in order to compute    the optimal policy for the MDP using a Dynamic Programming algorithm, and 'step()', that executes a probabilistical step for the MDP.
+  
+  - **MDPFactory**: Facility singleton class returning instances of MDPs as shared pointers.
 <h2>Main</h2>
 The *main.cpp* file initializes, computes the optimal policy and takes 10 steps of the MDP represented in the image below.
 
