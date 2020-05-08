@@ -18,7 +18,7 @@ class State;
 class MDP {
 private:
     bool debugMode;
-    static unsigned numStates;
+    unsigned numStates;
     State* currentState; //Pointer to the current state of the Markov Decision Process
     std::vector<State> states; //STATES
     std::unordered_map<State, double,HashState> rewards;  //REWARD FUNCTION

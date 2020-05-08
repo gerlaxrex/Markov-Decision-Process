@@ -11,16 +11,15 @@
 
 
 //MDP
-unsigned MDP::numStates = 0;
 
 
-MDP::MDP(const std::vector<State>& sts){
+MDP::MDP(const std::vector<State>& sts):numStates(0){
     debugMode = false;
     this->states = sts;
     this->currentState = &states[0];
 }
 
-MDP::MDP(unsigned int sn){
+MDP::MDP(unsigned int sn):numStates(0){
     this->debugMode = false;
     for(int i = 0; i != sn; ++i){
         this->states.push_back({numStates});
@@ -72,7 +71,7 @@ MDP& MDP::addTransition(const std::pair<State,std::shared_ptr<Action>>& sa, cons
     if(conf.second == false){
         std::cout << "Transition already exists." << std::endl;
     }else{
-        std::cout << "Inserted Transition." << std::endl;
+        if(debugMode) std::cout << "Inserted Transition." << std::endl;
         //Normalize the distribution    
         for(auto el : this->transitions[sa]){
             this->transitions[sa][el.first] = el.second/norm;
@@ -171,6 +170,7 @@ void MDP::printRewards(){
     for(auto r : this->rewards){
         std::cout << r.first << "->" << std::setw(3) << r.second << std::endl;
     }
+    std::cout << std::endl;
 }
 
 void MDP::printPolicy(){
@@ -178,6 +178,7 @@ void MDP::printPolicy(){
     for(auto p : this->policy){
         std::cout << p.first << " -> " << *p.second << std::endl;
     }
+    std::cout << std::endl;
 }
 
 void MDP::printTransitions(){
@@ -189,6 +190,7 @@ void MDP::printTransitions(){
         }
         std::cout << std::endl;
     }
+    std::cout << std::endl;
 }
 
 MDP& MDP::setCurrentState(unsigned int i){
@@ -225,6 +227,7 @@ MDP& MDP::step(){
                 this->setCurrentState(nextState.getId()); 
             }
         }
+        std::cout << std::endl;
         return *this;
     }
 }
