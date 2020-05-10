@@ -11,8 +11,6 @@
 
 
 //MDP
-
-
 MDP::MDP(const std::vector<State>& sts):numStates(0){
     debugMode = false;
     this->states = sts;
@@ -115,7 +113,7 @@ double MDP::maxDistance(const std::map<State,double>& u, const std::map<State,do
 }
 
 
-MDP& MDP::computePolicy(){
+MDP& MDP::computePolicy(double df){
     std::map<State,double> u,v; //v is the new computed vector, u is the previous one.
     //Initialize the vectors
     for(auto s : this->states){
@@ -124,7 +122,12 @@ MDP& MDP::computePolicy(){
     //Begin the procedure
     double tollerance = 0.01;
     double maxDistance = 0;
-    double discountFactor = 0.5;
+    double discountFactor = df;
+    if(df < 0.0 || df >=1.0){
+        std::cout << "WARNING: Discount factor should be bounded in [0,1). Assignign default value (0.5)." << std::endl;
+        discountFactor = 0.5;
+    }
+
     do{
         u = v;
         double preceding = 0;
@@ -143,7 +146,9 @@ MDP& MDP::computePolicy(){
                         for(auto d : prob.second){
                             //std::cout <<"distribution: " << d.first << ":" << d.second << std::endl;
                             sumProb += d.second*u[d.first];
-                            }    
+                            }
+                        //This formula must change in case of reward depending ALSO on the action of the agent.
+                        //In that case in fact, we should have: this->rewards[std::make_pair(s,*a)].      
                         double tmpUtil = this->rewards[s] + discountFactor * sumProb;
                         if(tmpUtil > preceding){
                             preceding = tmpUtil;

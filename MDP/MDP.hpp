@@ -21,7 +21,7 @@ private:
     unsigned numStates;
     State* currentState; //Pointer to the current state of the Markov Decision Process
     std::vector<State> states; //STATES
-    std::unordered_map<State, double,HashState> rewards;  //REWARD FUNCTION
+    std::unordered_map<State, double,HashState> rewards;  //REWARD FUNCTION (If rewards also depend upon actions we have a map with also Actions)
     std::unordered_map<State, std::shared_ptr<Action>, HashState> policy;   //POLICY FUNCTION
     std::map<std::pair<State,std::shared_ptr<Action>>, std::map<State, double>> transitions;  //TRANSITION PROBABILITY (for each state and action we have a probability distr. over all states)
     //const State& computeProbability(const std::map<State,double>& distr); //Function that returns a state over a probability function
@@ -39,7 +39,7 @@ public:
     MDP& createReward(unsigned int sn, double reward);
     MDP& createTransition(unsigned int stateId, unsigned int actionId, const std::map<unsigned int,double>& distr);
     MDP& addAction(unsigned state, const std::string actionName, unsigned actionId);
-    MDP& computePolicy(); //MAIN METHOD, computes the optimal policy for the function
+    MDP& computePolicy(double df); //MAIN METHOD, computes the optimal policy for the function
     void printRewards();
     void printPolicy();
     void printTransitions();

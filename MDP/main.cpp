@@ -60,7 +60,7 @@ int main(){
     mk->printTransitions();
     // md->printTransitions();
     //Algorithm for the Policy computing
-    mk->computePolicy();
+    mk->computePolicy(0.5);
     mk->printPolicy();
 
     // md->computePolicy();
